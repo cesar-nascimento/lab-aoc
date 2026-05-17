@@ -32,7 +32,7 @@ SECRET_KEY = "django-insecure-xn&ttb6(w$zb1xom%bqvht2fc+&$y6a@$=fw_=kid31r(exel3
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    "lab-aoc.vercel.app",
+    ".vercel.app",
 ]
 
 
