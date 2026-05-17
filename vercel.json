@@ -1,18 +1,18 @@
 {
     "builds": [
         {
-            "src": "your_project/wsgi.py",
+            "src": "lab_aoc_django_backend/wsgi.py",
             "use": "@vercel/python",
             "config": {
                 "maxLambdaSize": "15mb",
-                "runtime": "python3.11"
+                "runtime": "python3.14"
             }
         }
     ],
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "your_project/wsgi.py"
+            "dest": "lab_aoc_django_backend/wsgi.py"
         }
     ]
 }
