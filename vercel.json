@@ -1,26 +1,18 @@
 {
-    "version": 2,
     "builds": [
         {
-            "src": "lab_aoc_django_backend/wsgi.py",
-            "use": "@vercel/python"
-        },
-        {
-            "src": "build_files.sh",
-            "use": "@vercel/static-build",
+            "src": "your_project/wsgi.py",
+            "use": "@vercel/python",
             "config": {
-                "distDir": "staticfiles_build"
+                "maxLambdaSize": "15mb",
+                "runtime": "python3.11"
             }
         }
     ],
     "routes": [
         {
-            "src": "/static/(.*)",
-            "dest": "/static/$1"
-        },
-        {
             "src": "/(.*)",
-            "dest": "lab_aoc_django_backend/wsgi.py"
+            "dest": "your_project/wsgi.py"
         }
     ]
 }
