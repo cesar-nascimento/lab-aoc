@@ -7,3 +7,8 @@ class Exchange(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+    class Meta:
+        verbose_name = "Exchange"
+        verbose_name_plural = "Exchanges"
+        ordering = ["name"]
