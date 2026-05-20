@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from django.contrib.auth.models import Group, User
 from rest_framework import generics, permissions, viewsets
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
@@ -38,6 +38,7 @@ class ExchangeViewSet(viewsets.ModelViewSet):
 
 
 @api_view(["GET"])
+@permission_classes([permissions.AllowAny])
 def api_root(request: Request, format: str | None = None) -> Response:
     return Response(
         {
