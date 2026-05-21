@@ -12,7 +12,7 @@ class ExchangeSerializer(serializers.ModelSerializer):
 class AssetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Asset
-        fields = ["url", "id", "symbol", "name"]
+        fields = ["id", "symbol", "name"]
 
 
 class MarketSerializer(serializers.ModelSerializer):
@@ -20,7 +20,7 @@ class MarketSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Market
-        fields = ["url", "id", "exchange", "base_asset", "quote_asset", "symbol"]
+        fields = ["id", "exchange", "base_asset", "quote_asset", "symbol"]
         read_only_fields = ("id",)
 
 
@@ -30,7 +30,6 @@ class TickerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ticker
         fields = [
-            "url",
             "id",
             "market_symbol",
             "market",
