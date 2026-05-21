@@ -15,8 +15,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+from django.contrib import admin
 from django.urls import include, path
+from django.views.generic import RedirectView
+from drf_spectacular.views import (
+    SpectacularAPIView,
+    SpectacularRedocView,
+    SpectacularSwaggerView,
+)
 from rest_framework import routers
+from rest_framework.authtoken import views as auth_views
 
 from core import views
 
@@ -28,5 +36,21 @@ router.register(r"exchanges", views.ExchangeViewSet, basename="exchange")
 
 
 urlpatterns = [
-    path("", include(router.urls)),
+    path("", RedirectView.as_view(url="/schema/redoc/"), name="root"),
+    # core
+    path("admin/", admin.site.urls),
+    path("api-auth/", include("rest_framework.urls")),
+    # api
+    path("api/", include(router.urls)),
+    path("api-token-auth/", auth_views.obtain_auth_token, name="api_token_auth"),
+    # docs
+    path("schema/", SpectacularAPIView.as_view(), name="schema"),
+    path(
+        "schema/swagger/",
+        SpectacularSwaggerView.as_view(url_name="schema"),
+        name="swagger-ui",
+    ),
+    path(
+        "schema/redoc/", SpectacularRedocView.as_view(url_name="schema"), name="redoc"
+    ),
 ]

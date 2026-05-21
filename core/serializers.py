@@ -19,4 +19,5 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 class ExchangeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Exchange
-        fields = ["id", "name", "is_active"]
+        fields = ["url", "id", "name", "is_active"]
+        read_only_fields = ("id",)

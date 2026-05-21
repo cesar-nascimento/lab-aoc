@@ -6,7 +6,7 @@ class Exchange(models.Model):
     is_active = models.BooleanField(default=True)
 
     def __str__(self) -> str:
-        return self.name
+        return f"{self.name}"
 
     class Meta:
         verbose_name = "Exchange"
