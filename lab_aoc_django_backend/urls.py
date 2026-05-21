@@ -30,9 +30,10 @@ from core import views
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
-router.register(r"users", views.UserViewSet, basename="user")
-router.register(r"groups", views.GroupViewSet, basename="group")
 router.register(r"exchanges", views.ExchangeViewSet, basename="exchange")
+router.register(r"assets", views.AssetViewSet, basename="asset")
+router.register(r"markets", views.MarketViewSet, basename="market")
+router.register(r"tickers", views.TickerViewSet, basename="ticker")
 
 
 urlpatterns = [

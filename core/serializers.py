@@ -1,23 +1,42 @@
-from django.contrib.auth.models import Group, User
 from rest_framework import serializers
 
-from core.models import Exchange
-
-
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ["url", "username", "email", "groups"]
-
-
-class GroupSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Group
-        fields = ["url", "name"]
+from core.models import Asset, Exchange, Market, Ticker
 
 
 class ExchangeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Exchange
-        fields = ["url", "id", "name", "is_active"]
+        fields = ["name"]
+
+
+class AssetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Asset
+        fields = ["url", "id", "symbol", "name"]
+
+
+class MarketSerializer(serializers.ModelSerializer):
+    symbol = serializers.CharField(read_only=True)
+
+    class Meta:
+        model = Market
+        fields = ["url", "id", "exchange", "base_asset", "quote_asset", "symbol"]
         read_only_fields = ("id",)
+
+
+class TickerSerializer(serializers.ModelSerializer):
+    market_symbol = serializers.CharField(source="market.symbol", read_only=True)
+
+    class Meta:
+        model = Ticker
+        fields = [
+            "url",
+            "id",
+            "market_symbol",
+            "market",
+            "timestamp",
+            "bid_price",
+            "ask_price",
+            "last_price",
+            "volume",
+        ]
