@@ -58,9 +58,9 @@ class Ticker(models.Model):
     market = models.ForeignKey(Market, on_delete=models.CASCADE, related_name="tickers")
     timestamp = models.DateTimeField(auto_now_add=True, db_index=True)
     bid_price = models.DecimalField(max_digits=18, decimal_places=8)
+    bid_volume = models.DecimalField(max_digits=24, decimal_places=8)
     ask_price = models.DecimalField(max_digits=18, decimal_places=8)
-    last_price = models.DecimalField(max_digits=18, decimal_places=8)
-    volume = models.DecimalField(max_digits=24, decimal_places=8, null=True, blank=True)
+    ask_volume = models.DecimalField(max_digits=24, decimal_places=8)
 
     def __str__(self) -> str:
         return f"Ticker for {self.market} at {self.timestamp}"
