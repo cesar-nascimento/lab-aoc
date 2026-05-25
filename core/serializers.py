@@ -35,7 +35,5 @@ class TickerSerializer(serializers.ModelSerializer):
             "market",
             "timestamp",
             "bid_price",
-            "bid_volume",
             "ask_price",
-            "ask_volume",
         ]

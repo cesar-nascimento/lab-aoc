@@ -43,6 +43,7 @@ urlpatterns = [
     path("api-auth/", include("rest_framework.urls")),
     # api
     path("api/", include(router.urls)),
+    path("api/trigger-sync/", views.ExternalDataView.as_view(), name="trigger_sync"),
     path("api-token-auth/", auth_views.obtain_auth_token, name="api_token_auth"),
     # docs
     path("schema/", SpectacularAPIView.as_view(), name="schema"),

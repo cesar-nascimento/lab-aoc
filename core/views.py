@@ -1,7 +1,11 @@
 from __future__ import annotations
 
+from asgiref.sync import async_to_sync
 from drf_spectacular.utils import OpenApiExample, extend_schema
 from rest_framework import mixins, permissions, viewsets
+from rest_framework.request import Request
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from core.models import Asset, Exchange, Market, Ticker
 from core.serializers import (
@@ -10,6 +14,22 @@ from core.serializers import (
     MarketSerializer,
     TickerSerializer,
 )
+from services.tickers import Exchanges, TickerService
+
+
+@extend_schema(exclude=True)
+class ExternalDataView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request: Request) -> Response:
+        if request.user.username != "cron_job":
+            return Response({"status": "forbidden"}, status=403)
+
+        try:
+            async_to_sync(TickerService().run)(exchanges=Exchanges)
+            return Response({"status": "ok"})
+        except Exception as e:
+            return Response({"status": "error", "message": str(e)}, status=500)
 
 
 @extend_schema(

@@ -29,7 +29,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 SECRET_KEY = "django-insecure-xn&ttb6(w$zb1xom%bqvht2fc+&$y6a@$=fw_=kid31r(exel3"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     ".vercel.app",
@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "core",
     "rest_framework.authtoken",
     "drf_spectacular",
+    "background_task",
 ]
 
 MIDDLEWARE = [
