@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from asgiref.sync import async_to_sync
 from django_filters.rest_framework import DjangoFilterBackend
-from drf_spectacular.utils import OpenApiExample, extend_schema
+from drf_spectacular.utils import extend_schema
 from rest_framework import mixins, permissions, viewsets
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -35,73 +35,21 @@ class ExternalDataView(APIView):
             return Response({"status": "error", "message": str(e)}, status=500)
 
 
-@extend_schema(
-    tags=["Exchanges"],
-    examples=[
-        OpenApiExample(
-            "Example Exchange List",
-            value=[
-                {"name": "Binance"},
-                {"name": "Mercado Bitcoin"},
-            ],
-            response_only=True,
-        )
-    ],
-)
+@extend_schema(tags=["Exchanges"])
 class ExchangeViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = Exchange.objects.all()
     serializer_class = ExchangeSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 
-@extend_schema(
-    tags=["Assets"],
-    examples=[
-        OpenApiExample(
-            "Example Asset List",
-            value=[
-                {
-                    "url": "/api/assets/1/",
-                    "id": 1,
-                    "symbol": "BTC",
-                    "name": "Bitcoin",
-                },
-                {
-                    "url": "/api/assets/2/",
-                    "id": 2,
-                    "symbol": "BRL",
-                    "name": "Brazilian Real",
-                },
-            ],
-            response_only=True,
-        )
-    ],
-)
+@extend_schema(tags=["Assets"])
 class AssetViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = Asset.objects.all()
     serializer_class = AssetSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 
-@extend_schema(
-    tags=["Markets"],
-    examples=[
-        OpenApiExample(
-            "Example Market List",
-            value=[
-                {
-                    "url": "/api/markets/1/",
-                    "id": 1,
-                    "exchange": 1,
-                    "base_asset": 1,
-                    "quote_asset": 2,
-                    "symbol": "BTC-BRL",
-                }
-            ],
-            response_only=True,
-        )
-    ],
-)
+@extend_schema(tags=["Markets"])
 class MarketViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = Market.objects.select_related(
         "exchange", "base_asset", "quote_asset"
@@ -110,24 +58,7 @@ class MarketViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 
-@extend_schema(
-    tags=["Tickers"],
-    examples=[
-        OpenApiExample(
-            "Example Ticker Response",
-            value={
-                "url": "/api/tickers/1/",
-                "id": 1,
-                "market_symbol": "BTC-BRL",
-                "market": 1,
-                "timestamp": "2024-05-21T14:15:22Z",
-                "bid_price": "350000.00",
-                "ask_price": "350050.00",
-            },
-            response_only=True,
-        ),
-    ],
-)
+@extend_schema(tags=["Tickers"])
 class TickerViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = Ticker.objects.select_related(
         "market",
