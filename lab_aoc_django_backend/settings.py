@@ -29,7 +29,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 SECRET_KEY = "django-insecure-xn&ttb6(w$zb1xom%bqvht2fc+&$y6a@$=fw_=kid31r(exel3"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     ".vercel.app",
@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     "core",
     "rest_framework.authtoken",
     "drf_spectacular",
-    "background_task",
+    "django_filters",
 ]
 
 MIDDLEWARE = [
@@ -143,6 +143,8 @@ REST_FRAMEWORK = {
         "rest_framework.renderers.JSONRenderer",
     ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 50,  # Returns 50 tickers per page
 }
 
 STORAGES = {

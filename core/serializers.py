@@ -37,3 +37,4 @@ class TickerSerializer(serializers.ModelSerializer):
             "bid_price",
             "ask_price",
         ]
+        read_only_fields = ["id", "timestamp"]

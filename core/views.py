@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from asgiref.sync import async_to_sync
+from django_filters.rest_framework import DjangoFilterBackend
 from drf_spectacular.utils import OpenApiExample, extend_schema
 from rest_framework import mixins, permissions, viewsets
 from rest_framework.request import Request
@@ -15,6 +16,8 @@ from core.serializers import (
     TickerSerializer,
 )
 from services.tickers import Exchanges, TickerService
+
+from .filters import TickerFilter
 
 
 @extend_schema(exclude=True)
@@ -100,7 +103,9 @@ class AssetViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     ],
 )
 class MarketViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    queryset = Market.objects.all()
+    queryset = Market.objects.select_related(
+        "exchange", "base_asset", "quote_asset"
+    ).all()
     serializer_class = MarketSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -118,14 +123,19 @@ class MarketViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
                 "timestamp": "2024-05-21T14:15:22Z",
                 "bid_price": "350000.00",
                 "ask_price": "350050.00",
-                "last_price": "350025.00",
-                "volume": "10.50000000",
             },
             response_only=True,
         ),
     ],
 )
 class TickerViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    queryset = Ticker.objects.all()
+    queryset = Ticker.objects.select_related(
+        "market",
+        "market__exchange",
+        "market__base_asset",
+        "market__quote_asset",
+    ).all()
     serializer_class = TickerSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = TickerFilter

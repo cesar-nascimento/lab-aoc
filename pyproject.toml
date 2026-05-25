@@ -8,6 +8,7 @@ dependencies = [
     "django>=6.0.5",
     "django-background-tasks>=1.2.8",
     "django-environ>=0.13.0",
+    "django-filter>=25.2",
     "djangorestframework>=3.17.1",
     "drf-spectacular>=0.29.0",
     "niquests>=3.18.8",
