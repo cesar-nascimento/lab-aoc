@@ -61,12 +61,13 @@ class Binance(Exchange):
             tickers = await session.get("/ticker/bookTicker")
             ticker_data = [
                 TickerData(
-                    base_asset=symbols[tickers["symbol"]]["base_asset"],
-                    quote_asset=symbols[tickers["symbol"]]["quote_asset"],
-                    bid_price=Decimal(str(tickers["bidPrice"])),
-                    ask_price=Decimal(str(tickers["askPrice"])),
+                    base_asset=symbols[ticker["symbol"]]["base_asset"],
+                    quote_asset=symbols[ticker["symbol"]]["quote_asset"],
+                    bid_price=Decimal(str(ticker["bidPrice"])),
+                    ask_price=Decimal(str(ticker["askPrice"])),
                 )
-                for tickers in tickers.json()
+                for ticker in tickers.json()
+                if ticker["symbol"] in symbols
             ]
         logger.info("Fetched %d tickers from %s", len(ticker_data), self.exchange_name)
         return ticker_data
