@@ -44,7 +44,7 @@ class Exchange(ABC):
 
 
 class Binance(Exchange):
-    base_url = "https://api.binance.us/api/v3"
+    base_url = "https://api.binance.com/api/v3"
     exchange_name = "Binance"
 
     async def get_tickers(self) -> list[TickerData]:
