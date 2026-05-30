@@ -146,7 +146,7 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
-    "PAGE_SIZE": 50,  # Returns 50 tickers per page
+    "PAGE_SIZE": 200,
 }
 
 STORAGES = {
