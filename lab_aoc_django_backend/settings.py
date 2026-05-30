@@ -26,7 +26,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-xn&ttb6(w$zb1xom%bqvht2fc+&$y6a@$=fw_=kid31r(exel3"
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY_APIKEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -52,9 +52,11 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "drf_spectacular",
     "django_filters",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -159,3 +161,9 @@ SPECTACULAR_SETTINGS = {
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
 }
+
+CORS_ALLOWED_ORIGINS = [
+    "https://lab-aoc-foxbit.vercel.app",
+    "https://lab-aoc.vercel.app",
+    "127.0.0.1",
+]
